@@ -45,7 +45,9 @@ public class App extends BasicGame {
   @Override
   public void render(GameContainer gc, Graphics g) throws SlickException
   {
-    g.drawString("Howdy!", 10, 10);
+    Room r = dungeon.getRooms().get(0);
+    g.drawRect(0, 0, r.getDimension().getWidth(), r.getDimension().getHeight());
+    //g.drawString("Howdy!", 10, 10);
   }
 
   public static void main(String[] args)
@@ -54,7 +56,9 @@ public class App extends BasicGame {
     {
       AppGameContainer appgc;
       App app = new App("Lost in the dark");
-      app.setDungeon(new Dungeon());
+      Dungeon d = new Dungeon();
+      d.addRoom(new Room(500, 500));
+      app.setDungeon(d);
       appgc = new AppGameContainer(app);
       appgc.setDisplayMode(1200, 800, false);
       appgc.start();
