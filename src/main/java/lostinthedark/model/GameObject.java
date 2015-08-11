@@ -1,18 +1,43 @@
 package lostinthedark.model;
 
-public abstract class GameObject {
-  private double weight;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.UUID;
 
-  public double getWeight() {
-    return weight;
+public abstract class GameObject {
+  private UUID objId;
+  private long clock;
+  private Queue<Action> pendingAction;
+
+  public GameObject() {
+    objId = UUID.randomUUID();
+    clock = 0;
+    pendingAction = new ArrayDeque<>();
   }
 
-  public void setWeight(double weight) {
-    this.weight = weight;
+  public UUID getObjId() {
+    return objId;
   }
 
   /**
-   * Objects will be asked to act, given their current context (i.e. a room)
+   * Objects will be asked to act, given their current context (i.e. a room).
+   * The number of milliseconds that have passed since the last call must be specified.
    */
-  public abstract void act(Room r);
+  public void act(Room r, int millisecondsPassed) {
+    clock += millisecondsPassed;
+
+    if (!pendingAction.isEmpty()) {
+      Action next = pendingAction.remove();
+      if (next.getDelayMs() <= clock) {
+        clock -= next.getDelayMs();
+        execute(next);
+      }
+    }
+  }
+
+  protected abstract void execute(Action next);
+
+  protected void scheduleAction(Action a) {
+    pendingAction.add(a);
+  }
 }

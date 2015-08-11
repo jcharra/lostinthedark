@@ -17,4 +17,12 @@ public class Dungeon {
   public List<Room> getRooms() {
     return rooms;
   }
+
+  public void animateObjects(int passedMilliseconds) {
+    for (Room r : rooms) {
+      for (GameObject obj : r.getObjects()) {
+        obj.act(r, passedMilliseconds);
+      }
+    }
+  }
 }

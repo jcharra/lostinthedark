@@ -1,19 +1,12 @@
 package lostinthedark.model;
 
-import java.util.UUID;
-
 public abstract class Beast extends GameObject {
-  private Equipment equipment;
-  private Inventory inventory;
-  private BeastProperties properties;
-  private UUID id;
+  public Equipment equipment;
+  public Inventory inventory;
+  public BeastProperties properties;
 
-  public BeastProperties getProperties() {
-    return properties;
-  }
-
-  public void setProperties(BeastProperties properties) {
-    this.properties = properties;
+  public Beast() {
+    super();
   }
 
   public Equipment getEquipment() {
@@ -32,11 +25,11 @@ public abstract class Beast extends GameObject {
     this.inventory = inventory;
   }
 
-  public UUID getId() {
-    return id;
+  public BeastProperties getProperties() {
+    return properties;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public void setProperties(BeastProperties properties) {
+    this.properties = properties;
   }
 }
